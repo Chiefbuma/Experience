@@ -51,7 +51,9 @@ st.header("Streamlit Shadcn UI")
 ui.badges(badge_list=[("shadcn", "default"), ("in", "secondary"), ("streamlit", "destructive")], class_name="flex gap-2", key="main_badges1")
 st.caption("A Streamlit component library for building beautiful apps easily. Bring the power of Shadcn UI to your Streamlit apps!")
 st.caption("Get started with pip install streamlit-shadcn-ui")
+ui.element("image", src="C:\ProgramData\MySQL\DATASCIENCE\Experience\sunrise.jpg", alt="Description of Image", width=200, key="img1")
 
+    
 
 with ui.element("div", className="flex gap-2", key="buttons_group1"):
     ui.element("button", text="Get Started", className="btn btn-primary", key="btn1")
