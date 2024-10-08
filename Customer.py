@@ -15,7 +15,7 @@ with card_container():
     colm = st.columns([0.05,2,0.05])
     with colm[1]:
         # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=700)
+        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=100)
     # Expander section with adjusted width
         with st.expander("DOWNLOAD PREVIOUS MONTH"):
             # Create a styled container for expander content
