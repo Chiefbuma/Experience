@@ -19,8 +19,8 @@ from streamlit_shadcn_ui import slider, input, textarea, radio_group, switch
 
 
   # Display the image from the local folder
-
-st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
+with card_container():
+    st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
        
 # Expander section with adjusted width
 with st.expander("DOWNLOAD PREVIOUS MONTH"):
