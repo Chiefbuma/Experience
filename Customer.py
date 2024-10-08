@@ -29,4 +29,4 @@ with colm[1]:
             
         )
         # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=400)
+        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
