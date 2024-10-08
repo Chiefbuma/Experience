@@ -12,10 +12,10 @@ from streamlit_shadcn_ui import slider, input, textarea, radio_group, switch
 from dateutil.relativedelta import relativedelta
 
 with card_container():
-    colm = st.columns([0.05,2,0.05])
+    colm = st.columns([0.5,2,0.5])
     with colm[1]:
         # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=100)
+        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
     # Expander section with adjusted width
         with st.expander("DOWNLOAD PREVIOUS MONTH"):
             # Create a styled container for expander content
