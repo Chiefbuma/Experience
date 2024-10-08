@@ -110,3 +110,28 @@ st.write("Selected Radio Option:", radio_value)
 st.subheader("Alert Dialog")
 trigger_btn = ui.button(text="Trigger Button", key="trigger_btn")
 ui.alert_dialog(show=trigger_btn, title="Alert Dialog", description="This is an alert dialog", confirm_label="OK", cancel_label="Cancel", key="alert_dialog1")
+
+
+with st.form('newoptical') as f:
+                with st.container():
+    
+                    Con_label2 = "Date"
+                    cols = st.columns(6)
+                
+                    with cols[5]:
+                        st.image("logo.png", width=150)
+                    
+                    with cols[2]:
+                        st.markdown(
+                            f"""
+                           <div style="background-color:white; padding:5px; border-radius:10px; width:500px; border: 0.0px solid white; margin-bottom:5px; line-height: 4.5;">
+                                <span>
+                                    <div style="font-size:26px; font-weight:bold; color:black;">
+                                        {Con_label2}
+                                    </div>
+                                </span>
+                            </div>
+                            """, 
+                            unsafe_allow_html=True
+                    )
+                    
