@@ -12,12 +12,12 @@ from streamlit_shadcn_ui import slider, input, textarea, radio_group, switch
 from dateutil.relativedelta import relativedelta
 
 
-colm = st.columns([0.5,2,0.5])
-with colm[1]:
+
     
 # Expander section with adjusted width
-    with st.expander("DOWNLOAD PREVIOUS MONTH"):
-        
+with st.expander("DOWNLOAD PREVIOUS MONTH"):
+    colm = st.columns([0.05,2,0.05])
+    with colm[1]:
         # Create a styled container for expander content
         st.markdown(
             """
