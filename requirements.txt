@@ -1,0 +1,11 @@
+ipython==8.18.0
+numpy==1.26.4
+pandas
+streamlit
+streamlit_option_menu==0.3.12
+streamlit_shadcn_ui==0.1.18
+ntlm-auth==1.5.0
+streamlit_dynamic_filters
+streamlit-aggrid
+
+
