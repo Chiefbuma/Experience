@@ -17,27 +17,26 @@ import numpy as np
 from local_components import card_container
 from streamlit_shadcn_ui import slider, input, textarea, radio_group, switch
 
-colm = st.columns([0.5,2,0.5])
-with colm[1]:
+
     
 # Expander section with adjusted width
-    with st.expander("DOWNLOAD PREVIOUS MONTH"):
+with st.expander("DOWNLOAD PREVIOUS MONTH"):
+    
+    # Create a styled container for expander content
+    st.markdown(
+        """
+        <div style="width: 400px;">
+            <p>Here you can download the data from the previous month.</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
         
-        # Create a styled container for expander content
-        st.markdown(
-            """
-            <div style="width: 400px;">
-                <p>Here you can download the data from the previous month.</p>
-            </div>
-            """, 
-            unsafe_allow_html=True
-            
-        )
-        # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=250)
-        
-        
-        
+    )
+    # Display the image from the local folder
+    st.image("sunrise.jpg", caption="Sunrise by the mountains", width=250)
+    
+    
+    
 
 
 # with open("docs/introduction.md", "r") as f:
