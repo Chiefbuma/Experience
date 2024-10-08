@@ -16,17 +16,16 @@ from dateutil.relativedelta import relativedelta
     
 # Expander section with adjusted width
 with st.expander("DOWNLOAD PREVIOUS MONTH"):
-    colm = st.columns([0.05,2,0.05])
-    with colm[1]:
-        # Create a styled container for expander content
-        st.markdown(
-            """
-            <div style="width: 300px;">
-                <p>Here you can download the data from the previous month.</p>
-            </div>
-            """, 
-            unsafe_allow_html=True
-            
-        )
-        # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=250)
+    
+    # Create a styled container for expander content
+    st.markdown(
+        """
+        <div style="width: 300px;">
+            <p>Here you can download the data from the previous month.</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+        
+    )
+    # Display the image from the local folder
+    st.image("sunrise.jpg", caption="Sunrise by the mountains", width=250)
