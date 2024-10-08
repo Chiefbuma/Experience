@@ -15,7 +15,7 @@ from dateutil.relativedelta import relativedelta
 colm = st.columns([0.5,2,0.5])
 with colm[1]:
     # Display the image from the local folder
-    st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
+    st.image("sunrise.jpg", caption="Sunrise by the mountains", width=400)
 # Expander section with adjusted width
     with st.expander("DOWNLOAD PREVIOUS MONTH"):
         # Create a styled container for expander content
