@@ -56,8 +56,10 @@ st.caption("Get started with pip install streamlit-shadcn-ui")
 with ui.element("div", className="flex gap-2", key="buttons_group1"):
     ui.element("button", text="Get Started", className="btn btn-primary", key="btn1")
     ui.element("link_button", text="Github", url="https://github.com/ObservedObserver/streamlit-shadcn-ui", variant="outline", key="btn2")
+    # Assuming the UI library has an image method
+    ui.element("image", src="C:\ProgramData\MySQL\DATASCIENCE\Experience\sunrise.jpg", alt="Description of Image", width=200, key="img1")
 
-st.subheader("Dashboard")
+    st.subheader("Dashboard")
 
 ui.tabs(options=['Overview', 'Analytics', 'Reports', 'Notifications'], default_value='Overview', key="main_tabs")
 
