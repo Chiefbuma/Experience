@@ -101,9 +101,7 @@ radio_options = [
 radio_value = radio_group(options=radio_options, default_value="B", key="radio1")
 st.write("Selected Radio Option:", radio_value)
 
-# Switch Component
-switch_value = switch(default_checked=True, label="Toggle Switch", key="switch1")
-st.write("Switch is On:", switch_value)
+
 
 st.subheader("Alert Dialog")
 trigger_btn = ui.button(text="Trigger Button", key="trigger_btn")
