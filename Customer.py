@@ -21,7 +21,7 @@ with colm[1]:
         # Create a styled container for expander content
         st.markdown(
             """
-            <div style="width: 200px;">
+            <div style="width: 300px;">
                 <p>Here you can download the data from the previous month.</p>
             </div>
             """, 
@@ -29,4 +29,4 @@ with colm[1]:
             
         )
         # Display the image from the local folder
-        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=400)
+        st.image("sunrise.jpg", caption="Sunrise by the mountains", width=300)
