@@ -21,6 +21,8 @@ from streamlit_shadcn_ui import slider, input, textarea, radio_group, switch
   # Display the image from the local folder
 with card_container():
     st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
+    switch_value = switch(default_checked=True, label="Toggle Switch", key="switch1")
+    st.write("Switch is On:", switch_value)
        
 # Expander section with adjusted width
 with st.expander("DOWNLOAD PREVIOUS MONTH"):
