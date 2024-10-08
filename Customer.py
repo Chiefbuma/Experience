@@ -21,7 +21,7 @@ with colm[1]:
         # Create a styled container for expander content
         st.markdown(
             """
-            <div style="width: 350px;">
+            <div style="width: 300px;">
                 <p>Here you can download the data from the previous month.</p>
             </div>
             """, 
