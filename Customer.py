@@ -49,17 +49,17 @@ with card_container():
             with ui.element("div", className="flex gap-2", key="buttons_group1"):
                     ui.element(
                     "button", 
-                    text="Diabetes Self-Assessment: Could You Be at Risk?", 
+                    text="Diabetes Self-Assessment", 
                     className="btn btn-primary", 
                     key="btn1",
                     style={
-                        "width": "500px",       # Adjust the width
-                        "height": "80px",       # Adjust the height
+                        "width": "300px",       # Adjust the width
+                        "height": "50px",       # Adjust the height
                         "background-color": "#04315b",  # Set a custom background color (green in this case)
                         "color": "white",       # Text color
                         "border-radius": "8px", # Optional: round corners
                         "border": "none",  
-                        "font-size": "20px",     # Increase font size
+                        "font-size": "15px",     # Increase font size
                         "font-weight": "bold"# Remove border if needed
                     }
                 )
@@ -72,12 +72,12 @@ with card_container():
                         key="btn1",
                         style={
                             "width": "50px",       # Adjust the width
-                            "height": "80px",       # Adjust the height
+                            "height": "50px",       # Adjust the height
                             "background-color": "#04315b",  # Set a custom background color (green in this case)
                             "color": "white",       # Text color
                             "border-radius": "8px", # Optional: round corners
                             "border": "none",  
-                            "font-size": "20px",     # Increase font size
+                            "font-size": "15px",     # Increase font size
                             "font-weight": "bold"# Remove border if needed
                         }
                     )
