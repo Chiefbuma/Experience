@@ -24,91 +24,23 @@ with st.container(key="logo"):
 
         with cols[0]:
             st.image("logo.png", width=150)
-
-        st.markdown(
-                    """
-                    <style>
-                    /* Apply styles to the form container */
-                    div[data-testid="stForm"] {
-                        border: 2.0px solid black; /* Bold border */
-                        padding: 0px;
-                        border-radius: 10px;
-                    }
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
     
 # Display the image from the local folder
 with card_container():
-    
-    with st.container(key="stcontainer"):
-        
-        coll = st.columns([1,12])
-        with coll[1]:
-            with ui.element("div", className="flex gap-2", key="buttons_group1"):
-                    results=ui.element(
-                    "button", 
-                    text="Diabetes Self-Assessment", 
-                    className="btn btn-primary", 
-                    key="btn1",
-                    style={
-                        "width": "230px", 
-                        "padding": "0px",
-                        "margin": "0px",   
-                        "height": "40px",       # Adjust the height
-                        "background-color": "#04315b",  # Set a custom background color (green in this case)
-                        "color": "white",       # Text color
-                        "border-radius": "8px", # Optional: round corners
-                        "border": "none",  
-                        "font-size": "15px",     # Increase font size
-                        "font-weight": "bold"# Remove border if needed
-                    }
-                )
-            if results:     
-                st.markdown(
-                    """
-                    <style>
-                    div[data-testid="stForm"] {
-                        border: 2.0px solid black; /* Bold border */
-                        padding: 0px;
-                        border-radius: 10px;
-                        margin: 0px;  /* Remove margin */
-                        margin-top: -30
-                        px; /* Reduce vertical space above form */
-                    }
-                    button {
-                        margin-bottom: 20px;  /* Reduce vertical space below button */
-                    }
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
-    
-        
-                with st.form('newoptical') as f:
-                    with st.container():
-                        cols = st.columns(6)
-                    
-                    colj = st.columns(7)
-                    with colj[3]:
-                        ui_result = st.form_submit_button("Ok", type="primary")
-                        if ui_result: 
-                            with st.spinner('Wait! Reloading view...'):
-                                st.cache_data.clear()         
-                    
+        with st.container(key="stcontainer"):
+            coll = st.columns([1,8])
             with coll[0]:
                 with ui.element("div", className="flex flex-col gap-0", key="buttons_group2"):
                         ui.element(
-                        "button", 
-                        text="1.", 
+                        "button",
+                        text="1.",
                         className="btn btn-primary", 
                         key="btn1",
                         style={
-                            "width": "40px",       # Adjust the width
+                            "width": "50px",       # Adjust the width
                             "height": "40px", 
-                            "padding": "0px",
-                             "margin": "0px",  # Adjust the height
+                            "padding": "5px",
+                            "margin": "0px",  # Adjust the height
                             "background-color": "#04315b",  # Set a custom background color (green in this case)
                             "color": "white",       # Text color
                             "border-radius": "8px", # Optional: round corners
@@ -117,15 +49,98 @@ with card_container():
                             "font-weight": "bold"# Remove border if needed
                         }
                     )
-                    
+                        
+            with coll[1]:
+                # Define CSS styling for the popover button and its popover content
+                st.markdown("""
+                    <style>
+                    /* Target the popover button */
+                    div[data-testid="stPopover"] button {
+                        background-color: #04315b;  /* Button background color */
+                        color: white;               /* Text color */
+                        font-size: 20px;            /* Font size */
+                        font-weight: bold;          /* Bold text */
+                        padding: 30px 10px;         /* Padding for the button */
+                        border-radius: 8px;         /* Rounded corners */
+                        border: none;               /* No border */
+                        cursor: pointer;            /* Pointer cursor on hover */
+                        padding: 0px;
+                        margin": 0px;
+                    }
 
-                
+                    /* Optional: Styling for hover effect */
+                    div[data-testid="stPopover"] button:hover {
+                        background-color: #cfe2f3;  /* Darker background on hover */
+                    }
 
+                    /* Style the popover content */
+                    .stPopoverContent {
+                        font-family: Arial, sans-serif;
+                        font-size: 25px;
+                    }
+                    </style>
+                """, unsafe_allow_html=True)
 
-        # with open("docs/introduction.md", "r") as f:
-#     st.markdown(f.read())
+                # Trigger the popover using st.popover
+                with st.popover("Diabetes Self-Assessment", use_container_width=True):
+                    st.markdown("Could You Be at Risk? 👋")
+                    name = st.text_input("What's your name?")
+                                        # Add custom CSS for styling the checkbox
+                    st.markdown("""
+                        <style>
+                        /* Style the checkbox container */
+                        .custom-checkbox {
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+                            padding: 8px;
+                            border-radius: 6px;
+                            transition: background-color 0.3s;
+                        }
 
-# ui.date_picker()
+                        /* Change background color on hover */
+                        .custom-checkbox:hover {
+                            background-color: #f0f0f0; /* Light grey background on hover */
+                        }
+
+                        /* Style the checkbox input */
+                        .custom-checkbox input {
+                            width: 20px; /* Size of the checkbox */
+                            height: 20px; /* Size of the checkbox */
+                            margin-right: 8px; /* Space between checkbox and label */
+                            cursor: pointer;
+                            accent-color: #3b82f6; /* Change the checkbox color */
+                        }
+
+                        /* Optional: Style the label */
+                        .custom-checkbox label {
+                            font-size: 16px; /* Font size for the label */
+                            color: #333; /* Text color */
+                        }
+                        </style>
+                    """, unsafe_allow_html=True)
+
+                    # Create checkboxes
+                    option_1 = st.checkbox("Option 1", key="opt1")
+                    option_2 = st.checkbox("Option 2", key="opt2")
+                    option_3 = st.checkbox("Option 3", key="opt3")
+
+                    # Custom rendering for checkboxes using HTML
+                    st.markdown("""
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="custom1" name="custom1" {0}>
+                            <label for="custom1">Option 1</label>
+                        </div>
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="custom2" name="custom2" {1}>
+                            <label for="custom2">Option 2</label>
+                        </div>
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="custom3" name="custom3" {2}>
+                            <label for="custom3">Option 3</label>
+                        </div>
+                    """.format('checked' if option_1 else '', 'checked' if option_2 else '', 'checked' if option_3 else ''), unsafe_allow_html=True)
+
 
 st.header("Streamlit Shadcn UI")
 ui.badges(badge_list=[("shadcn", "default"), ("in", "secondary"), ("streamlit", "destructive")], class_name="flex gap-2", key="main_badges1")
