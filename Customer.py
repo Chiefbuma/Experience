@@ -39,39 +39,22 @@ with st.container(key="logo"):
                     unsafe_allow_html=True
                 )
     
-
-
-with st.container(key="stcontainer"):
+# Display the image from the local folder
+with card_container():
     
-    coll = st.columns([1,8])
-    with coll[1]:
-        with ui.element("div", className="flex gap-2", key="buttons_group1"):
-                ui.element(
-                "button", 
-                text="Diabetes Self-Assessment", 
-                className="btn btn-primary", 
-                key="btn1",
-                style={
-                    "width": "300px",       # Adjust the width
-                    "height": "50px",       # Adjust the height
-                    "background-color": "#04315b",  # Set a custom background color (green in this case)
-                    "color": "white",       # Text color
-                    "border-radius": "8px", # Optional: round corners
-                    "border": "none",  
-                    "font-size": "15px",     # Increase font size
-                    "font-weight": "bold"# Remove border if needed
-                }
-            )
-        with coll[0]:
-            with ui.element("div", className="flex gap-2", key="buttons_group2"):
+    with st.container(key="stcontainer"):
+        
+        coll = st.columns([1,10])
+        with coll[1]:
+            with ui.element("div", className="flex gap-2", key="buttons_group1"):
                     ui.element(
                     "button", 
-                    text="1.", 
+                    text="Diabetes Self-Assessment", 
                     className="btn btn-primary", 
                     key="btn1",
                     style={
-                        "width": "50px",       # Adjust the width
-                        "height": "50px",       # Adjust the height
+                        "width": "200px",       # Adjust the width
+                        "height": "40px",       # Adjust the height
                         "background-color": "#04315b",  # Set a custom background color (green in this case)
                         "color": "white",       # Text color
                         "border-radius": "8px", # Optional: round corners
@@ -80,9 +63,27 @@ with st.container(key="stcontainer"):
                         "font-weight": "bold"# Remove border if needed
                     }
                 )
-                
+            with coll[0]:
+                with ui.element("div", className="flex gap-2", key="buttons_group2"):
+                        ui.element(
+                        "button", 
+                        text="1.", 
+                        className="btn btn-primary", 
+                        key="btn1",
+                        style={
+                            "width": "40px",       # Adjust the width
+                            "height": "40px",       # Adjust the height
+                            "background-color": "#04315b",  # Set a custom background color (green in this case)
+                            "color": "white",       # Text color
+                            "border-radius": "8px", # Optional: round corners
+                            "border": "none",  
+                            "font-size": "15px",     # Increase font size
+                            "font-weight": "bold"# Remove border if needed
+                        }
+                    )
+                    
 
-            
+                
 
 
         # with open("docs/introduction.md", "r") as f:
