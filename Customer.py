@@ -51,7 +51,7 @@ with card_container():
                     )
                         
             with coll[1]:
-                # Define CSS styling for the popover button and its popover content
+               # Add custom CSS for popover button styling
                 st.markdown("""
                     <style>
                     /* Target the popover button */
@@ -60,12 +60,9 @@ with card_container():
                         color: white;               /* Text color */
                         font-size: 20px;            /* Font size */
                         font-weight: bold;          /* Bold text */
-                        padding: 30px 10px;         /* Padding for the button */
-                        border-radius: 8px;         /* Rounded corners */
-                        border: none;               /* No border */
+                        padding: 0px;               /* No padding */
+                        margin: 0px;                /* No margin */
                         cursor: pointer;            /* Pointer cursor on hover */
-                        padding: 0px;
-                        margin": 0px;
                     }
 
                     /* Optional: Styling for hover effect */
@@ -78,69 +75,104 @@ with card_container():
                         font-family: Arial, sans-serif;
                         font-size: 25px;
                     }
+
+                    /* Style the checkbox container */
+                    .custom-checkbox {
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                        padding: 8px;
+                        border-radius: 6px;
+                        transition: background-color 0.3s;
+                    }
+
+                    /* Change background color on hover */
+                    .custom-checkbox:hover {
+                        background-color: #f0f0f0; /* Light grey background on hover */
+                    }
+
+                    /* Style the checkbox input */
+                    .custom-checkbox input {
+                        width: 20px; /* Size of the checkbox */
+                        height: 20px; /* Size of the checkbox */
+                        margin-left: 8px; /* Space between label and checkbox */
+                        cursor: pointer;
+                        accent-color: #3b82f6; /* Change the checkbox color */
+                    }
+
+                    /* Optional: Style the label */
+                    .custom-checkbox label {
+                        font-size: 16px; /* Font size for the label */
+                        color: #333; /* Text color */
+                    }
                     </style>
                 """, unsafe_allow_html=True)
 
-                # Trigger the popover using st.popover
-                with st.popover("Diabetes Self-Assessment", use_container_width=True):
-                    st.markdown("Could You Be at Risk? 👋")
-                    name = st.text_input("What's your name?")
-                                        # Add custom CSS for styling the checkbox
-                    st.markdown("""
-                        <style>
-                        /* Style the checkbox container */
-                        .custom-checkbox {
-                            display: flex;
-                            align-items: center;
-                            cursor: pointer;
-                            padding: 8px;
-                            border-radius: 6px;
-                            transition: background-color 0.3s;
+                # Initialize session state for checkbox values
+                if 'checkbox_states' not in st.session_state:
+                    st.session_state.checkbox_states = {}
+
+                # Function to toggle checkbox state
+                def toggle_js():
+                    return """
+                    <script>
+                        function toggleCheckbox(checkboxId) {
+                            const checkbox = document.getElementById(checkboxId);
+                            checkbox.checked = !checkbox.checked;
+
+                            const state = checkbox.checked ? 'true' : 'false';
+                            const label = checkboxId.replace('custom', 'Option ');
+
+                            // Send the state to Streamlit using query parameters
+                            const url = new URL(window.location.href);
+                            url.searchParams.set('key', label);
+                            url.searchParams.set('value', state);
+                            window.history.pushState({}, '', url);
                         }
+                    </script>
+                    """
 
-                        /* Change background color on hover */
-                        .custom-checkbox:hover {
-                            background-color: #f0f0f0; /* Light grey background on hover */
-                        }
+                # Create a function for rendering a popover with checkboxes
+                def create_popover(title, options, popover_key):
+                    with st.popover(title, use_container_width=True):
+                        st.markdown("Could You Be at Risk? 👋")
+                
+                        
+                        # Render JavaScript for checkbox toggling
+                        st.markdown(toggle_js(), unsafe_allow_html=True)
 
-                        /* Style the checkbox input */
-                        .custom-checkbox input {
-                            width: 20px; /* Size of the checkbox */
-                            height: 20px; /* Size of the checkbox */
-                            margin-right: 8px; /* Space between checkbox and label */
-                            cursor: pointer;
-                            accent-color: #3b82f6; /* Change the checkbox color */
-                        }
+                        for index, option in enumerate(options):
+                            checkbox_key = f"{popover_key}_{index+1}"
+                            if checkbox_key not in st.session_state.checkbox_states:
+                                st.session_state.checkbox_states[checkbox_key] = False
+                            
+                            st.markdown(f"""
+                                <div class="custom-checkbox">
+                                    <label for="{checkbox_key}">{option}</label>
+                                    <input type="checkbox" id="{checkbox_key}" name="{checkbox_key}" onchange="toggleCheckbox('{checkbox_key}')" { 'checked' if st.session_state.checkbox_states[checkbox_key] else '' }>
+                                </div>
+                            """, unsafe_allow_html=True)
 
-                        /* Optional: Style the label */
-                        .custom-checkbox label {
-                            font-size: 16px; /* Font size for the label */
-                            color: #333; /* Text color */
-                        }
-                        </style>
-                    """, unsafe_allow_html=True)
+                        # Listening for messages from the checkbox
+                        if st.query_params.get('key'):
+                            key = st.query_params['key'][0].replace('Option ', popover_key + '_')
+                            value = st.query_params['value'][0] == 'true'
+                            if key in st.session_state.checkbox_states:
+                                st.session_state.checkbox_states[key] = value
 
-                    # Create checkboxes
-                    option_1 = st.checkbox("Option 1", key="opt1")
-                    option_2 = st.checkbox("Option 2", key="opt2")
-                    option_3 = st.checkbox("Option 3", key="opt3")
+                # Define options for the checkboxes
+                options = [f"Option {i+1}" for i in range(5)]
 
-                    # Custom rendering for checkboxes using HTML
-                    st.markdown("""
-                        <div class="custom-checkbox">
-                            <input type="checkbox" id="custom1" name="custom1" {0}>
-                            <label for="custom1">Option 1</label>
-                        </div>
-                        <div class="custom-checkbox">
-                            <input type="checkbox" id="custom2" name="custom2" {1}>
-                            <label for="custom2">Option 2</label>
-                        </div>
-                        <div class="custom-checkbox">
-                            <input type="checkbox" id="custom3" name="custom3" {2}>
-                            <label for="custom3">Option 3</label>
-                        </div>
-                    """.format('checked' if option_1 else '', 'checked' if option_2 else '', 'checked' if option_3 else ''), unsafe_allow_html=True)
+                # Create four popovers
+                with st.container():
+                    st.header("Health Assessments")
+                    create_popover("Diabetes Self-Assessment", options, "diabetes")
+                    create_popover("Heart Health Check", options, "heart")
+                    create_popover("Cholesterol Check", options, "cholesterol")
+                    create_popover("Blood Pressure Monitor", options, "blood_pressure")
 
+                # Display the current state of the checkboxes for debugging
+                st.write("Checkbox States:", st.session_state.checkbox_states)
 
 st.header("Streamlit Shadcn UI")
 ui.badges(badge_list=[("shadcn", "default"), ("in", "secondary"), ("streamlit", "destructive")], class_name="flex gap-2", key="main_badges1")
