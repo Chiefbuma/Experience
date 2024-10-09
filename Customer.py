@@ -51,128 +51,74 @@ with card_container():
                     )
                         
             with coll[1]:
-               # Add custom CSS for popover button styling
-                st.markdown("""
-                    <style>
-                    /* Target the popover button */
-                    div[data-testid="stPopover"] button {
-                        background-color: #04315b;  /* Button background color */
-                        color: white;               /* Text color */
-                        font-size: 20px;            /* Font size */
-                        font-weight: bold;          /* Bold text */
-                        padding: 0px;               /* No padding */
-                        margin: 0px;                /* No margin */
-                        cursor: pointer;            /* Pointer cursor on hover */
-                    }
+                questions = [
+                    "Do you often feel tired or fatigued?",
+                    "Do you have frequent thirst or hunger?",
+                    "Do you experience blurred vision?",
+                    "Do you have slow healing sores?",
+                    "Do you have numbness or tingling in your hands or feet?",
+                ]
 
-                    /* Optional: Styling for hover effect */
-                    div[data-testid="stPopover"] button:hover {
-                        background-color: #cfe2f3;  /* Darker background on hover */
-                    }
-
-                    /* Style the popover content */
-                    .stPopoverContent {
-                        font-family: Arial, sans-serif;
-                        font-size: 25px;
-                    }
-
-                    /* Style the checkbox container */
-                    .custom-checkbox {
-                        display: flex;
-                        align-items: center;
-                        cursor: pointer;
-                        padding: 8px;
-                        border-radius: 6px;
-                        transition: background-color 0.3s;
-                    }
-
-                    /* Change background color on hover */
-                    .custom-checkbox:hover {
-                        background-color: #f0f0f0; /* Light grey background on hover */
-                    }
-
-                    /* Style the checkbox input */
-                    .custom-checkbox input {
-                        width: 20px; /* Size of the checkbox */
-                        height: 20px; /* Size of the checkbox */
-                        margin-left: 8px; /* Space between label and checkbox */
-                        cursor: pointer;
-                        accent-color: #3b82f6; /* Change the checkbox color */
-                    }
-
-                    /* Optional: Style the label */
-                    .custom-checkbox label {
-                        font-size: 16px; /* Font size for the label */
-                        color: #333; /* Text color */
-                    }
-                    </style>
-                """, unsafe_allow_html=True)
-
-                # Initialize session state for checkbox values
+                # Initialize session state for checkbox values and current page
                 if 'checkbox_states' not in st.session_state:
-                    st.session_state.checkbox_states = {}
+                    st.session_state.checkbox_states = {f"question_{i}_yes": False for i in range(len(questions))}
+                    st.session_state.checkbox_states.update({f"question_{i}_no": False for i in range(len(questions))})
+                if 'current_page' not in st.session_state:
+                    st.session_state.current_page = 0
 
-                # Function to toggle checkbox state
-                def toggle_js():
-                    return """
-                    <script>
-                        function toggleCheckbox(checkboxId) {
-                            const checkbox = document.getElementById(checkboxId);
-                            checkbox.checked = !checkbox.checked;
-
-                            const state = checkbox.checked ? 'true' : 'false';
-                            const label = checkboxId.replace('custom', 'Option ');
-
-                            // Send the state to Streamlit using query parameters
-                            const url = new URL(window.location.href);
-                            url.searchParams.set('key', label);
-                            url.searchParams.set('value', state);
-                            window.history.pushState({}, '', url);
-                        }
-                    </script>
-                    """
-
-                # Create a function for rendering a popover with checkboxes
-                def create_popover(title, options, popover_key):
-                    with st.popover(title, use_container_width=True):
+                # Function to create the popover with questions
+                def create_popover():
+                    with st.popover("Diabetes Self-Assessment", use_container_width=True):
                         st.markdown("Could You Be at Risk? 👋")
-                
+
+                        # Get the current question index
+                        current_page = st.session_state.current_page
                         
-                        # Render JavaScript for checkbox toggling
-                        st.markdown(toggle_js(), unsafe_allow_html=True)
+                        # Ensure we don't exceed the number of questions
+                        if current_page >= len(questions):
+                            st.markdown("Thank you for completing the assessment!")
+                            return  # Exit if no more questions
 
-                        for index, option in enumerate(options):
-                            checkbox_key = f"{popover_key}_{index+1}"
-                            if checkbox_key not in st.session_state.checkbox_states:
-                                st.session_state.checkbox_states[checkbox_key] = False
-                            
-                            st.markdown(f"""
-                                <div class="custom-checkbox">
-                                    <label for="{checkbox_key}">{option}</label>
-                                    <input type="checkbox" id="{checkbox_key}" name="{checkbox_key}" onchange="toggleCheckbox('{checkbox_key}')" { 'checked' if st.session_state.checkbox_states[checkbox_key] else '' }>
-                                </div>
-                            """, unsafe_allow_html=True)
+                        # Display the current question
+                        current_question = questions[current_page]
+                        st.markdown(f"**{current_question}**")
 
-                        # Listening for messages from the checkbox
-                        if st.query_params.get('key'):
-                            key = st.query_params['key'][0].replace('Option ', popover_key + '_')
-                            value = st.query_params['value'][0] == 'true'
-                            if key in st.session_state.checkbox_states:
-                                st.session_state.checkbox_states[key] = value
+                        # Create Yes and No checkboxes
+                        yes_key = f"question_{current_page}_yes"
+                        no_key = f"question_{current_page}_no"
 
-                # Define options for the checkboxes
-                options = [f"Option {i+1}" for i in range(5)]
+                        col1, col2 = st.columns(2)
+                        
+                        # Yes Checkbox
+                        with col1:
+                            checked_yes = st.session_state.checkbox_states.get(yes_key, False)
+                            st.checkbox("Yes", key=yes_key, value=checked_yes, on_change=lambda: next_question(yes_key))
 
-                # Create four popovers
+                        # No Checkbox
+                        with col2:
+                            checked_no = st.session_state.checkbox_states.get(no_key, False)
+                            st.checkbox("No", key=no_key, value=checked_no, on_change=lambda: next_question(no_key))
+
+                # Function to move to the next question
+                def next_question(checkbox_key):
+                    if checkbox_key.endswith("yes"):
+                        # Update session state to reflect that the "Yes" checkbox was checked
+                        st.session_state.checkbox_states[checkbox_key] = True
+
+                    # Move to the next question
+                    if st.session_state.current_page < len(questions) - 1:
+                        st.session_state.current_page += 1
+                    else:
+                        st.session_state.current_page = len(questions)  # End the assessment if last question is answered
+
+                # Create a single popover with pagination
                 with st.container():
                     st.header("Health Assessments")
-                    create_popover("Diabetes Self-Assessment", options, "diabetes")
-                    create_popover("Heart Health Check", options, "heart")
-                    create_popover("Cholesterol Check", options, "cholesterol")
-                    create_popover("Blood Pressure Monitor", options, "blood_pressure")
+                    create_popover()
 
-                # Display the current state of the checkboxes for debugging
-                st.write("Checkbox States:", st.session_state.checkbox_states)
+                # Update current page based on URL parameter (optional for URL management)
+                if 'current_page' in st.query_params:
+                    st.session_state.current_page = int(st.query_params['current_page'][0])
 
 st.header("Streamlit Shadcn UI")
 ui.badges(badge_list=[("shadcn", "default"), ("in", "secondary"), ("streamlit", "destructive")], class_name="flex gap-2", key="main_badges1")
