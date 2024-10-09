@@ -31,7 +31,7 @@ with st.container(key="logo"):
                     /* Apply styles to the form container */
                     div[data-testid="stForm"] {
                         border: 2.0px solid black; /* Bold border */
-                        padding: 10px;
+                        padding: 0px;
                         border-radius: 10px;
                     }
                     </style>
@@ -44,16 +44,18 @@ with card_container():
     
     with st.container(key="stcontainer"):
         
-        coll = st.columns([1,10])
+        coll = st.columns([1,12])
         with coll[1]:
             with ui.element("div", className="flex gap-2", key="buttons_group1"):
-                    ui.element(
+                    results=ui.element(
                     "button", 
                     text="Diabetes Self-Assessment", 
                     className="btn btn-primary", 
                     key="btn1",
                     style={
-                        "width": "200px",       # Adjust the width
+                        "width": "230px", 
+                        "padding": "0px",
+                        "margin": "0px",   
                         "height": "40px",       # Adjust the height
                         "background-color": "#04315b",  # Set a custom background color (green in this case)
                         "color": "white",       # Text color
@@ -63,8 +65,40 @@ with card_container():
                         "font-weight": "bold"# Remove border if needed
                     }
                 )
+            if results:     
+                st.markdown(
+                    """
+                    <style>
+                    div[data-testid="stForm"] {
+                        border: 2.0px solid black; /* Bold border */
+                        padding: 0px;
+                        border-radius: 10px;
+                        margin: 0px;  /* Remove margin */
+                        margin-top: -30
+                        px; /* Reduce vertical space above form */
+                    }
+                    button {
+                        margin-bottom: 20px;  /* Reduce vertical space below button */
+                    }
+                    </style>
+                    """,
+                    unsafe_allow_html=True
+                )
+    
+        
+                with st.form('newoptical') as f:
+                    with st.container():
+                        cols = st.columns(6)
+                    
+                    colj = st.columns(7)
+                    with colj[3]:
+                        ui_result = st.form_submit_button("Ok", type="primary")
+                        if ui_result: 
+                            with st.spinner('Wait! Reloading view...'):
+                                st.cache_data.clear()         
+                    
             with coll[0]:
-                with ui.element("div", className="flex gap-2", key="buttons_group2"):
+                with ui.element("div", className="flex flex-col gap-0", key="buttons_group2"):
                         ui.element(
                         "button", 
                         text="1.", 
@@ -72,7 +106,9 @@ with card_container():
                         key="btn1",
                         style={
                             "width": "40px",       # Adjust the width
-                            "height": "40px",       # Adjust the height
+                            "height": "40px", 
+                            "padding": "0px",
+                             "margin": "0px",  # Adjust the height
                             "background-color": "#04315b",  # Set a custom background color (green in this case)
                             "color": "white",       # Text color
                             "border-radius": "8px", # Optional: round corners
