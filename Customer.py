@@ -42,41 +42,51 @@ with st.container(key="logo"):
 # Display the image from the local folder
 with card_container():
     
-    switch_value = switch(default_checked=True, label="Toggle Switch", key="switch1")
-    st.write("Switch is On:", switch_value)
-    
     with st.container(key="stcontainer"):
+        
+        coll = st.columns([1,8])
+        with coll[1]:
+            with ui.element("div", className="flex gap-2", key="buttons_group1"):
+                    ui.element(
+                    "button", 
+                    text="Diabetes Self-Assessment: Could You Be at Risk?", 
+                    className="btn btn-primary", 
+                    key="btn1",
+                    style={
+                        "width": "500px",       # Adjust the width
+                        "height": "80px",       # Adjust the height
+                        "background-color": "#04315b",  # Set a custom background color (green in this case)
+                        "color": "white",       # Text color
+                        "border-radius": "8px", # Optional: round corners
+                        "border": "none",  
+                        "font-size": "20px",     # Increase font size
+                        "font-weight": "bold"# Remove border if needed
+                    }
+                )
+            with coll[0]:
+                with ui.element("div", className="flex gap-2", key="buttons_group2"):
+                        ui.element(
+                        "button", 
+                        text="1.", 
+                        className="btn btn-primary", 
+                        key="btn1",
+                        style={
+                            "width": "50px",       # Adjust the width
+                            "height": "80px",       # Adjust the height
+                            "background-color": "#04315b",  # Set a custom background color (green in this case)
+                            "color": "white",       # Text color
+                            "border-radius": "8px", # Optional: round corners
+                            "border": "none",  
+                            "font-size": "20px",     # Increase font size
+                            "font-weight": "bold"# Remove border if needed
+                        }
+                    )
+                    
 
-        Con_label2 = "Date"
-        cols = st.columns(6)
-
-        with cols[0]:
-            st.image("sunrise.jpg", caption="Sunrise by the mountains", width=200)
-
-        Collect_label = "Collected"
-        full_label = "Full-"
-        Partial_label = "Partial-"
-        st.markdown(
-            f"""
-            <div style="background-color:white; padding:10px; border-radius:10px; width:200px; border: 0.5px solid grey; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); margin-bottom:5px;">
-                <div style="font-size:16px; font-weight:bold; color:black;">
-                    {Collect_label}
-                </div>
-                <div style="font-size:18px; font-weight:bold; color:black;">
-                {full_label} {Collect_label}
-                </div>
-                <div style="font-size:18px; font-weight:bold; color:black;">
-                {Partial_label}{Collect_label}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:green; font-weight:bold;">{Collect_label}</span>
-                </div>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
-
-    
+                
 
 
-# with open("docs/introduction.md", "r") as f:
+        # with open("docs/introduction.md", "r") as f:
 #     st.markdown(f.read())
 
 # ui.date_picker()
@@ -89,13 +99,8 @@ ui.element("image", src="C:\ProgramData\MySQL\DATASCIENCE\Experience\sunrise.jpg
 
     
 
-with ui.element("div", className="flex gap-2", key="buttons_group1"):
-    ui.element("button", text="Get Started", className="btn btn-primary", key="btn1")
-    ui.element("link_button", text="Github", url="https://github.com/ObservedObserver/streamlit-shadcn-ui", variant="outline", key="btn2")
-    # Assuming the UI library has an image method
-    ui.element("image", src="C:\ProgramData\MySQL\DATASCIENCE\Experience\sunrise.jpg", alt="Description of Image", width=200, key="img1")
 
-    st.subheader("Dashboard")
+st.subheader("Dashboard")
 
 ui.tabs(options=['Overview', 'Analytics', 'Reports', 'Notifications'], default_value='Overview', key="main_tabs")
 
